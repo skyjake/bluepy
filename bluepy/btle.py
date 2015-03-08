@@ -58,7 +58,7 @@ class UUID:
         if len(val) <= 8:  # Short form
             val = ("0" * (8 - len(val))) + val + "00001000800000805F9B34FB"
 
-        self.binVal = binascii.a2b_hex(val)
+        self.binVal = binascii.a2b_hex(val.encode('latin-1'))
         if len(self.binVal) != 16:
             raise ValueError(
                 "UUID must be 16 bytes, got '%s' (len=%d)" % (val,
@@ -183,7 +183,7 @@ class Peripheral:
         self._helper = None
         self._poller = None
         self.services = {} # Indexed by UUID
-	self.addrType = addrType
+        self.addrType = addrType
         self.discoveredAllServices = False
         self.delegate = DefaultDelegate()
         if deviceAddr is not None:
@@ -233,7 +233,7 @@ class Peripheral:
             elif tval[0]=="h":
                 val = int(tval[1:], 16)
             elif tval[0]=='b':
-                val = binascii.a2b_hex(tval[1:])
+                val = binascii.a2b_hex(tval[1:].encode('latin-1'))
             else:
                 raise BTLEException(BTLEException.INTERNAL_ERROR,
                              "Cannot understand response value %s" % repr(tval))
