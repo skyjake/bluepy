@@ -86,7 +86,7 @@ class UUID:
         if s.endswith("-0000-1000-8000-00805f9b34fb"):
             s = s[0:8]
             if s.startswith("0000"):
-                s = s[4:]    
+                s = s[4:]
         return s
 
 class Service:
@@ -270,6 +270,13 @@ class Peripheral:
                 self.delegate.handleNotification(hnd, data)
                 if wantType != respType:
                     continue
+                    
+            if respType == 'ind':
+		hnd = resp['hnd'][0]
+		data = resp['d'][0]
+		self.delegate.handleNotification(hnd, data)
+		if wantType != respType:
+		    continue
 
             if respType == wantType:
                 return resp
@@ -402,7 +409,7 @@ class _UUIDNameMap:
     # from names.
     def __init__(self, idList):
         self.idMap = {}
-        
+
         for uuid in idList:
             attrName = capitaliseName(uuid.commonName)
             vars(self) [attrName] = uuid
@@ -412,8 +419,8 @@ class _UUIDNameMap:
         if uuid in self.idMap:
             return self.idMap[uuid].commonName
         return None
-        
-AssignedNumbers = _UUIDNameMap( [    
+
+AssignedNumbers = _UUIDNameMap( [
     # Service UUIDs
     UUID(0x1811, "Alert Notification Service"),
     UUID(0x180F, "Battery Service"),
