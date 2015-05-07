@@ -272,11 +272,11 @@ class Peripheral:
                     continue
                     
             if respType == 'ind':
-		hnd = resp['hnd'][0]
-		data = resp['d'][0]
-		self.delegate.handleNotification(hnd, data)
-		if wantType != respType:
-		    continue
+                hnd = resp['hnd'][0]
+                data = resp['d'][0]
+                self.delegate.handleNotification(hnd, data)
+                if wantType != respType:
+                    continue
 
             if respType == wantType:
                 return resp
