@@ -9,6 +9,7 @@ import time
 import subprocess
 import binascii
 import select
+import functools
 
 Debugging = False
 script_path = os.path.join(os.path.abspath(os.path.dirname(__file__)))
@@ -454,8 +455,8 @@ class _UUIDNameMap:
 
 def get_json_uuid():
     import json
-    uuid_data = json.load(file(os.path.join(script_path, 'uuids.json')))
-    all_uuids = reduce(lambda a,b: a+b, (uuid_data[x] for x in ['service_UUIDs',
+    uuid_data = json.load(open(os.path.join(script_path, 'uuids.json')))
+    all_uuids = functools.reduce(lambda a,b: a+b, (uuid_data[x] for x in ['service_UUIDs',
                                                         'characteristic_UUIDs',
                                                         'descriptor_UUIDs']))
 
