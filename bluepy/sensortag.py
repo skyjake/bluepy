@@ -169,10 +169,10 @@ class KeypressSensor(SensorBase):
         SensorBase.__init__(self, periph)
  
     def enable(self):
-        self.periph.writeCharacteristic(0x60, struct.pack('<bb', 0x01, 0x00))
+        self.periph.writeCharacteristic(0x60, struct.pack('<bb', 0x01, 0x00), True)
 
     def disable(self):
-        self.periph.writeCharacteristic(0x60, struct.pack('<bb', 0x00, 0x00))
+        self.periph.writeCharacteristic(0x60, struct.pack('<bb', 0x00, 0x00), True)
 
 class SensorTag(Peripheral):
     def __init__(self,addr):
@@ -220,7 +220,7 @@ class KeypressDelegate(DefaultDelegate):
     def onButtonDown(self, but):
         print ( "** " + self._button_desc[but] + " DOWN")
 
-if __name__ == "__main__":
+def main():
     import time
     import sys
     import argparse
@@ -288,3 +288,6 @@ if __name__ == "__main__":
 
     tag.disconnect()
     del tag
+
+if __name__ == "__main__":
+    main()
